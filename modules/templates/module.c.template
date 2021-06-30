@@ -1,0 +1,180 @@
+/*
+ * @brief Implementation of MYMOD module.
+ *
+ * This module ...
+ *
+ * The following console commands are provided:
+ * > MYMOD status
+ * See code for details.
+ *
+ * MIT License
+ * 
+ * Copyright (c) 2021 Eugene R Schroeder
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+#include <stdint.h>
+
+#include "module.h"
+
+#include "MYMOD.h"
+
+////////////////////////////////////////////////////////////////////////////////
+// Common macros
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Type definitions
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Private (static) function declarations
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Private (static) variables
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Public (global) variables and externs
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Public (global) functions
+////////////////////////////////////////////////////////////////////////////////
+
+// TODO: CHOOSE ONE SET OF FUNCTIONS BELOW BASED ON NUMBER OF INSTANCES
+
+/*
+ * @brief Get default MYMOD configuration.
+ *
+ * @param[out] cfg The MYMOD configuration with defaults filled in.
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ */
+int32_t MYMOD_get_def_cfg(struct MYMOD_cfg* cfg)
+{
+}
+
+/*
+ * @brief Initialize MYMOD instance.
+ *
+ * @param[in] cfg The MYMOD configuration. (FUTURE)
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * This function initializes the MYMOD singleton module. Generally, it should
+ * not access other modules as they might not have been initialized yet. An
+ * exception is the log module.
+ */
+int32_t MYMOD_init(struct MYMOD_cfg* cfg)
+{
+    return 0;
+}
+
+/*
+ * @brief Start MYMOD instance.
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * This function starts the MYMOD singleton module, to enter normal operation.
+ */
+int32_t MYMOD_start(void)
+{
+    return 0;
+}
+
+/*
+ * @brief Run MYMOD instance.
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * @note This function should not block.
+ *
+ * This function runs the MYMOD singleton module, during normal operation.
+ */
+int32_t MYMOD_run(void)
+{
+    return 0;
+}
+
+// TODO: START OF MULTI-INSTANCE TEMPLATES
+
+/*
+ * @brief Get default MYMOD configuration.
+ *
+ * @param[in] instance_id Identifies the MYMOD instance.
+ * @param[out] cfg The MYMOD configuration with defaults filled in.
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ */
+int32_t MYMOD_get_def_cfg(MYMOD_instance_id instance_id, struct MYMOD_cfg* cfg)
+{
+}
+
+/*
+ * @brief Initialize MYMOD instance.
+ *
+ * @param[in] instance_id Identifies the MYMOD instance.
+ * @param[in] cfg The MYMOD configuration. (FUTURE)
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * This function initializes a MYMOD module instance. Generally, it should not
+ * access other modules as they might not have been initialized yet.  An
+ * exception is the log module.
+ */
+int32_t MYMOD_init(MYMOD_instance_id instance_id, struct MYMOD_cfg* cfg)
+{
+    return 0;
+}
+
+/*
+ * @brief Start MYMOD instance.
+ *
+ * @param[in] instance_id Identifies the MYMOD instance.
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * This function starts a MYMOD module instance, to enter normal operation.
+ */
+int32_t MYMOD_start(MYMOD_instance_id instance_id)
+{
+    return 0;
+}
+
+/*
+ * @brief Run MYMOD instance.
+ *
+ * @param[in] instance_id Identifies the MYMOD instance.
+ *
+ * @return 0 for success, else a "MOD_ERR" value. See code for details.
+ *
+ * @note This function should not block.
+ *
+ * This function runs a MYMOD module instance, during normal operation.
+ */
+int32_t MYMOD_run(MYMOD_instance_id instance_id)
+{
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Private (static) functions
+////////////////////////////////////////////////////////////////////////////////
