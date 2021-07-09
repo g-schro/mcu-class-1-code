@@ -31,7 +31,7 @@
 
 #include <stdint.h>
 
-#include "stm32f4xx_ll_gpio.h"
+#include "stm32l4xx_ll_gpio.h"
 
 /*
  * Guide to defining dio inputs and outputs.

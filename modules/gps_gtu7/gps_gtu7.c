@@ -143,7 +143,7 @@ int32_t gps_get_def_cfg(struct gps_cfg* cfg)
         return MOD_ERR_ARG;
 
     memset(cfg, 0, sizeof(*cfg));
-    cfg->ttys_instance_id = TTYS_INSTANCE_UART6;
+    cfg->ttys_instance_id = TTYS_INSTANCE_UART3;
     return 0;
 }
 

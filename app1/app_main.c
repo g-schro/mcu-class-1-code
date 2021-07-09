@@ -195,14 +195,14 @@ void app_main(void)
         }
     }
 
-    result = ttys_get_def_cfg(TTYS_INSTANCE_UART6, &ttys_cfg);
+    result = ttys_get_def_cfg(TTYS_INSTANCE_UART3, &ttys_cfg);
     if (result < 0) {
         log_error("ttys_get_def_cfg error %d\n", result);
         INC_SAT_U16(cnts_u16[CNT_INIT_ERR]);
     } else {
-        result = ttys_init(TTYS_INSTANCE_UART6, &ttys_cfg);
+        result = ttys_init(TTYS_INSTANCE_UART3, &ttys_cfg);
         if (result < 0) {
-            log_error("ttys_init UART6 error %d\n", result);
+            log_error("ttys_init UART3 error %d\n", result);
             INC_SAT_U16(cnts_u16[CNT_INIT_ERR]);
         }
     }
@@ -267,9 +267,9 @@ void app_main(void)
         INC_SAT_U16(cnts_u16[CNT_START_ERR]);
     }
 
-    result = ttys_start(TTYS_INSTANCE_UART6);
+    result = ttys_start(TTYS_INSTANCE_UART3);
     if (result < 0) {
-        log_error("ttys_start UART6 error %d\n", result);
+        log_error("ttys_start UART3 error %d\n", result);
         INC_SAT_U16(cnts_u16[CNT_START_ERR]);
     }
 

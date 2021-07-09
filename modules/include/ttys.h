@@ -37,7 +37,7 @@
 enum ttys_instance_id {
     TTYS_INSTANCE_UART1,
     TTYS_INSTANCE_UART2, // File discriptor 1 (stdin/stdout).
-    TTYS_INSTANCE_UART6,
+    TTYS_INSTANCE_UART3,
 
     TTYS_NUM_INSTANCES
 };

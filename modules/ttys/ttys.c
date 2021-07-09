@@ -63,7 +63,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "stm32f4xx_ll_usart.h"
+#include "stm32l4xx_ll_usart.h"
 
 #include "cmd.h"
 #include "log.h"
@@ -84,7 +84,7 @@
 
 #define UART1_FD 4
 #define UART2_FD 1
-#define UART6_FD 3
+#define UART3_FD 3
 
 ////////////////////////////////////////////////////////////////////////////////
 // Type definitions
@@ -243,9 +243,9 @@ int32_t ttys_init(enum ttys_instance_id instance_id, struct ttys_cfg* cfg)
             st->uart_reg_base = USART2;
             st->fd = UART2_FD;
             break;
-        case TTYS_INSTANCE_UART6:
-            st->uart_reg_base = USART6;
-            st->fd = UART6_FD;
+        case TTYS_INSTANCE_UART3:
+            st->uart_reg_base = USART3;
+            st->fd = UART3_FD;
             break;
         default:
             return MOD_ERR_BAD_INSTANCE;
@@ -297,8 +297,8 @@ int32_t ttys_start(enum ttys_instance_id instance_id)
         case TTYS_INSTANCE_UART2:
             irq_type = USART2_IRQn;
             break;
-        case TTYS_INSTANCE_UART6:
-            irq_type = USART6_IRQn;
+        case TTYS_INSTANCE_UART3:
+            irq_type = USART3_IRQn;
             break;
         default:
             return MOD_ERR_BAD_INSTANCE;
@@ -431,9 +431,9 @@ void USART2_IRQHandler(void)
     ttys_interrupt(TTYS_INSTANCE_UART2, USART2_IRQn);
 }
 
-void USART6_IRQHandler(void)
+void USART3_IRQHandler(void)
 {
-    ttys_interrupt(TTYS_INSTANCE_UART6, USART6_IRQn);
+    ttys_interrupt(TTYS_INSTANCE_UART3, USART3_IRQn);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -467,9 +467,9 @@ static void ttys_interrupt(enum ttys_instance_id instance_id,
         return;
     }
 
-    sr = st->uart_reg_base->SR;
+    sr = st->uart_reg_base->ISR;
 
-    if (sr & LL_USART_SR_RXNE) {
+    if (sr & LL_USART_ISR_RXNE) {
         // Got an incoming character.
         uint16_t next_rx_put_idx = st->rx_buf_put_idx + 1;
         if (next_rx_put_idx >= TTYS_RX_BUF_SIZE)
@@ -477,38 +477,38 @@ static void ttys_interrupt(enum ttys_instance_id instance_id,
         if (next_rx_put_idx == st->rx_buf_get_idx) {
             INC_SAT_U16(cnts_u16[CNT_RX_BUF_OVERRUN]);
         } else {
-            st->rx_buf[st->rx_buf_put_idx] = st->uart_reg_base->DR;
+            st->rx_buf[st->rx_buf_put_idx] = st->uart_reg_base->RDR;
             st->rx_buf_put_idx = next_rx_put_idx;
         }
     }
-    if (sr & LL_USART_SR_TXE) {
+    if (sr & LL_USART_ISR_TXE) {
         // Can send a character.
         if (st->tx_buf_get_idx == st->tx_buf_put_idx) {
             // No characters to send, disable the interrrupt.
             LL_USART_DisableIT_TXE(st->uart_reg_base);
         } else {
-            st->uart_reg_base->DR = st->tx_buf[st->tx_buf_get_idx];
+            st->uart_reg_base->TDR = st->tx_buf[st->tx_buf_get_idx];
             if (st->tx_buf_get_idx < TTYS_TX_BUF_SIZE-1)
                 st->tx_buf_get_idx++;
             else
                 st->tx_buf_get_idx = 0;
         }
     }
-    if (sr & (LL_USART_SR_ORE | LL_USART_SR_NE | LL_USART_SR_FE |
-              LL_USART_SR_PE)) {
+    if (sr & (LL_USART_ISR_ORE | LL_USART_ISR_NE | LL_USART_ISR_FE |
+              LL_USART_ISR_PE)) {
 
-        // Error conditions. To clear the bit, we need to read the data
-        // register, but we don't use it.
+        // Clear error bits.
+        st->uart_reg_base->ICR = sr & 0xf;
 
-        (void)st->uart_reg_base->DR;
-        if (sr & LL_USART_SR_ORE)
+        if (sr & LL_USART_ISR_ORE)
             INC_SAT_U16(cnts_u16[CNT_RX_UART_ORE]);
-        if (sr & LL_USART_SR_NE)
+        if (sr & LL_USART_ISR_NE)
             INC_SAT_U16(cnts_u16[CNT_RX_UART_NE]);
-        if (sr & LL_USART_SR_FE)
+        if (sr & LL_USART_ISR_FE)
             INC_SAT_U16(cnts_u16[CNT_RX_UART_FE]);
-        if (sr & LL_USART_SR_PE)
+        if (sr & LL_USART_ISR_PE)
             INC_SAT_U16(cnts_u16[CNT_RX_UART_PE]);
+        sr = st->uart_reg_base->ISR;
     }
 }
 
@@ -658,8 +658,8 @@ static enum ttys_instance_id fd_to_instance(int fd)
     enum ttys_instance_id instance_id = TTYS_NUM_INSTANCES;
 
     switch (fd) {
-        case UART6_FD:
-            instance_id = TTYS_INSTANCE_UART6;
+        case UART3_FD:
+            instance_id = TTYS_INSTANCE_UART3;
             break;
         case UART1_FD:
             instance_id = TTYS_INSTANCE_UART1;
