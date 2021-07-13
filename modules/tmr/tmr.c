@@ -451,7 +451,7 @@ static int32_t cmd_tmr_test(int32_t argc, const char** argv)
 {
     struct cmd_arg_val arg_vals[2];
     uint32_t param1;
-    uint32_t param2;
+    uint32_t param2 = 0;
     int32_t rc;
 
     // Handle help case.

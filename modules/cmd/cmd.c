@@ -223,7 +223,7 @@ int32_t cmd_execute(char* bfr)
             return MOD_ERR_BAD_CMD;
         } 
         if (strcasecmp(tokens[1], "log") == 0) {
-            int32_t log_level;
+            int32_t log_level = 0;
             if (num_tokens == 3) {
                 log_level = log_level_int(tokens[2]);
                 if (log_level < 0) {

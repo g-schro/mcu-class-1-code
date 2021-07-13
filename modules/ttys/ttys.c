@@ -555,8 +555,8 @@ static int32_t cmd_ttys_test(int32_t argc, const char** argv)
 {
     struct cmd_arg_val arg_vals[1];
     uint32_t param;
-    FILE* f;
-    int fd;
+    FILE* f = NULL;
+    int fd = 0;
     int rc;
     uint32_t start_ms;
     const char* test_msg = "Test\n";
