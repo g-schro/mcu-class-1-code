@@ -472,12 +472,13 @@ static void ttys_interrupt(enum ttys_instance_id instance_id,
     if (sr & LL_USART_ISR_RXNE) {
         // Got an incoming character.
         uint16_t next_rx_put_idx = st->rx_buf_put_idx + 1;
+        char rx_data = st->uart_reg_base->RDR;
         if (next_rx_put_idx >= TTYS_RX_BUF_SIZE)
             next_rx_put_idx = 0;
         if (next_rx_put_idx == st->rx_buf_get_idx) {
             INC_SAT_U16(cnts_u16[CNT_RX_BUF_OVERRUN]);
         } else {
-            st->rx_buf[st->rx_buf_put_idx] = st->uart_reg_base->RDR;
+            st->rx_buf[st->rx_buf_put_idx] = rx_data;
             st->rx_buf_put_idx = next_rx_put_idx;
         }
     }
