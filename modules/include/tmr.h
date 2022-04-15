@@ -51,7 +51,7 @@ struct tmr_cfg
 
 // Core module interface functions.
 int32_t tmr_init(struct tmr_cfg* cfg);;
-int32_t tmr_start(void;);
+int32_t tmr_start(void);
 int32_t tmr_run(void);
 
 // Other module-level APIs:
